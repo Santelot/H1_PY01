@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playbook - Sesión 1: ¡Plan de Ataque IA! – Del Concepto al Prompt Maestro</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; color: #333; line-height: 1.6; }
+        .container { max-width: 1000px; margin: auto; padding: 20px; }
+        .header { background-color: #ffa500; color: white; text-align: center; padding: 10px; } /* Orange Accent */
+        .activity { margin-bottom: 20px; }
+        /* Using details/summary as requested, styling summary like a banner */
+        summary.banner {
+            background-color: #ffa500; /* Orange Accent */
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            margin-bottom: 0px; /* Adjust as needed */
+            font-weight: bold;
+            list-style: none; /* Hide default marker */
+            display: block; /* Ensure it takes full width */
+        }
+        summary.banner::-webkit-details-marker { display: none; } /* Hide marker in Webkit */
+        details > summary.banner { margin-bottom: 10px; } /* Add margin when details is closed */
+        details[open] > summary.banner { margin-bottom: 0; } /* No margin when details is open */
+
+        .content { display: block; padding: 10px; border: 1px solid #ddd; margin-bottom: 10px; margin-top: -10px; border-top: none;} /* Content shown by default with details */
+        details:not([open]) .content {
+             /* Styles for content when details is closed - already handled by details */
+        }
+        details[open] .content {
+           /* Styles for content when details is open */
+           border-top: 1px solid #ddd; /* Add border-top when open to separate from summary */
+           margin-top:0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #f2f2f2; /* Light gray for headers */
+        }
+        td:first-child { /* Action column */
+            width: 50%;
+        }
+        td:last-child { /* Dialogue column */
+            width: 50%;
+        }
+        span[style*="color: red;"] {
+            font-weight: bold;
+        }
+         ul, ol {
+            margin-top: 0;
+            margin-bottom: 10px;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        .time-title { margin-bottom: 20px; text-align: center; font-size: 1.2em; color: #555;}
+        /* Italicized notes for facilitator */
+        em { font-style: italic; color: #555; }
+        strong { color: #ffa500; } /* Highlight keywords in orange */
+    </style>
+    <script>
+        // Basic toggle function, though <details> handles visibility natively.
+        // Kept for potential future use or if <details> proves problematic across browsers.
+        function toggleContent(id) {
+            const detailElement = document.getElementById(id + '_details'); // Assuming details element has id like 'activity_1_details'
+            if (detailElement) {
+                // The browser handles the open/close state automatically
+            }
+        }
+         // Ensure all content starts hidden/shown based on details state (native)
+         window.onload = () => {
+             // Native <details> handles initial state, no extra JS needed for this.
+         };
+    </script>
+</head>
+<body>
+    <div class="header">
+        <h1>Playbook - Prototipo Rápido IA - Sesión 1: ¡Plan de Ataque IA! – Del Concepto al Prompt Maestro</h1>
+    </div>
+    <div class="container">
+        <h2 class="time-title">Tiempo efectivo de clase: 40 minutos</h2>
+
+        <!-- Resumen de Sesión -->
+        <details id="activity_0_details" class="activity" open>
+            <summary class="banner" onclick="toggleContent('activity_0')">📝 Resumen de Sesión</summary>
+            <div id="activity_0_content" class="content">
+                <table>
+                    <tr>
+                        <td style="width: 50%; padding: 10px; border-right: 1px solid #ddd;">
+                            <strong>🎯 Objetivo:</strong>
+                            <ul>
+                                <li>Traducir la "Visión del Futuro" conceptual (de Fase 2) a un plan técnico de IA (identificando herramientas potenciales, definiendo una estrategia inicial de prompts).</li>
+                                <li>Definir el prototipo funcional básico (MVP - Minimum Viable Prototype) que se generará con IA.</li>
+                                <li>Asignar roles técnicos (Arquitecto/a IA, Ingeniero/a Prompts, Evaluador/a Calidad) para gestionar el flujo de trabajo.</li>
+                                <li>Crear el backlog inicial de prompts en un tablero Kanban.</li>
+                            </ul>
+                        </td>
+                        <td style="width: 50%; padding: 10px;">
+                             <strong>🔑 Entregable Clave:</strong>
+                             <ul>
+                                <li>MVP del prototipo IA definido por cada equipo.</li>
+                                <li>Roles técnicos asignados dentro de cada equipo.</li>
+                                <li>Tablero Kanban preparado por cada equipo con el backlog inicial de tareas/prompts en "Por Hacer".</li>
+                             </ul>
+                             <strong>🛠️ Materiales / Preparación:</strong>
+                            <ul>
+                                <li>Acceso de los equipos a su "Visión del Futuro" (Miro board, T-Bar de Fase 2, o documento equivalente).</li>
+                                <li>Tablero Kanban físico (rotafolios, post-its, marcadores) o digital (Trello, Miro, etc.) preparado o listo para ser configurado por equipo.</li>
+                                <li>Proyector o pantalla para mostrar diapositivas propuestas.</li>
+                                <li>(Opcional) Hojas o plantilla para definir el MVP y el backlog.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </details>
+
+        <!-- Desarrollo de la Sesión -->
+
+        <!-- Actividad 1: Revisión Estratégica de Visión -->
+        <details id="activity_1_details" class="activity" open>
+            <summary class="banner" onclick="toggleContent('activity_1')">👋 Actividad 1: Revisión Estratégica de Visión ⏰ Tiempo: 5 minutos</summary>
+            <div id="activity_1_content" class="content">
+                <table>
+                     <thead><tr><th>Acción</th><th>Diálogo del Maestro</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>Paso 1: (1 min)</strong> Iniciar la sesión y enfocar a los equipos en su trabajo previo. <strong>(Proyectar Diapositiva 1: Título de la Sesión y Logo del Proyecto)</strong>.
+                            </td>
+                            <td>
+                                "¡Muy bien, equipo! Bienvenidos a la Sesión 1 de nuestro proyecto 'Prototipo Rápido IA'. Hoy damos el salto del concepto a la acción. Vamos a transformar esa increíble 'Visión del Futuro' que definieron en la Fase 2 en un plan concreto para que la Inteligencia Artificial nos ayude a construirla."
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Paso 2: (4 min)</strong> Instruir a los equipos para que revisen su concepto de "Visión del Futuro". Circular para asegurar que todos estén accediendo y re-familiarizándose con su idea.
+                            </td>
+                            <td>
+                                "¡Visionarios! Lo primero es reconectar con su gran idea. Tómense estos minutos para abrir su documento, Miro board o T-Bar de la Fase 2 donde plasmaron su 'Visión del Futuro'. Revisen los puntos clave, la esencia de lo que quieren crear."
+                                <br><br>
+                                <em>(Mientras los equipos revisan)</em>
+                                "¿Recuerdan el problema que abordaban? ¿La solución que imaginaron? ¿El impacto que buscaban? Refresquen esa visión, porque hoy la convertiremos en un plan para que la IA nos ayude a darle vida digitalmente. ¡Este es el inicio de la creación!"
+                                <br><br>
+                                <em>(Circular y preguntar a algún equipo: "¿Cuál era el núcleo de su visión? ¿Qué era lo más emocionante?")</em>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+
+        <!-- Actividad 2: Introducción Kanban IA y Roles Tech -->
+        <details id="activity_2_details" class="activity" open>
+            <summary class="banner" onclick="toggleContent('activity_2')">📊 Actividad 2: Introducción Kanban IA y Roles Tech ⏰ Tiempo: 10 minutos</summary>
+            <div id="activity_2_content" class="content">
+                 <table>
+                     <thead><tr><th>Acción</th><th>Diálogo del Maestro</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>Paso 1: (3 min)</strong> Explicar el flujo de trabajo usando Kanban. <strong>(Proyectar Diapositiva 2: Visual del Flujo Kanban con 4 columnas: Por Hacer 💡, En Ingeniería ⚙️, En Evaluación 🤔, ¡Logrado! ✅)</strong>.
+                            </td>
+                            <td>
+                                "Para organizar nuestro trabajo con la IA, usaremos una herramienta súper útil llamada <strong>Kanban</strong>. Imaginen un tablero con columnas que nos muestran dónde está cada tarea."
+                                <br><br>
+                                <em>(Señalar la Diapositiva 2)</em>
+                                <br>
+                                "<strong>1. Por Hacer (💡):</strong> Aquí estarán todas las ideas y tareas que necesitamos que la IA realice, nuestros prompts iniciales."
+                                <br>
+                                "<strong>2. En Ingeniería (⚙️):</strong> Aquí es donde trabajamos activamente en diseñar, escribir y ejecutar los prompts en la herramienta de IA."
+                                <br>
+                                "<strong>3. En Evaluación (🤔):</strong> Una vez que la IA nos da un resultado (texto, imagen, etc.), pasa aquí para revisarlo críticamente. ¿Cumple lo que pedimos? ¿Es de buena calidad?"
+                                <br>
+                                "<strong>4. ¡Logrado! (✅):</strong> ¡Cuando una tarea está completa y aprobada, la movemos aquí! Celebramos el progreso."
+                                <br><br>
+                                "Este flujo nos ayudará a mantener todo organizado y visible."
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Paso 2: (5 min)</strong> Presentar los roles técnicos adaptados y sus responsabilidades. <strong>(Proyectar Diapositiva 3: Roles Técnicos - Arquitecto/a, Ingeniero/a, Evaluador/a con iconos y descripciones)</strong>.
+                            </td>
+                            <td>
+                                "Para que este proceso funcione genial, cada miembro del equipo tendrá un <strong>rol especializado</strong>. Estos roles nos ayudarán a enfocarnos y colaborar mejor:"
+                                <br><br>
+                                <em>(Señalar la Diapositiva 3)</em>
+                                <br>
+                                "🔵 <strong>Arquitecto/a de IA:</strong> Es el estratega. Define la visión general de cómo usar la IA (qué herramientas podríamos usar, qué tipo de resultado -output- buscamos). Descompone la 'Visión del Futuro' en los prompts clave iniciales. ¡Es quien diseña el plano!"
+                                <br><br>
+                                "🟢 <strong>Ingeniero/a de Prompts:</strong> Es el constructor/a. Diseña, escribe y ejecuta los prompts directamente en las herramientas de IA (como ChatGPT, Midjourney, etc.). Recibe feedback y refina (itera) los prompts hasta obtener un buen resultado. ¡Es quien habla con la IA!"
+                                <br><br>
+                                "🟡 <strong>Evaluador/a de Calidad IA:</strong> Es el crítico constructivo. Analiza la salida (output) de la IA. Se pregunta: ¿Cumple el objetivo del prompt? ¿Es coherente con nuestra visión general? ¿Tiene errores, sesgos o 'alucinaciones' (información inventada)? ¡Es quien asegura que el resultado sea excelente!"
+                                <br><br>
+                                "Para este desafío IA, usaremos estos roles. La colaboración entre ustedes será <strong>clave</strong> para el éxito."
+                            </td>
+                        </tr>
+                         <tr>
+                            <td>
+                                <strong>Paso 3: (2 min)</strong> Dar la instrucción para que los equipos preparen su tablero Kanban (físico o digital).
+                            </td>
+                            <td>
+                                "¡Muy bien! Ahora, cada equipo va a preparar su propio tablero Kanban. Si es físico, tomen un rotafolio o cartulina y dibujen las cuatro columnas: <strong>Por Hacer, En Ingeniería, En Evaluación, ¡Logrado!</strong>. Si es digital, abran su herramienta (Miro, Trello) y creen estas columnas."
+                                <br><br>
+                                "Tienen 2 minutos para tener listo su tablero base. ¡Manos a la obra!"
+                                <br><br>
+                                <em>(Mientras preparan el tablero, verificar que las columnas estén claras).</em>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+
+        <!-- Actividad 3: Definiendo el Núcleo del Prototipo IA (MVP) -->
+        <details id="activity_3_details" class="activity" open>
+            <summary class="banner" onclick="toggleContent('activity_3')">🎯 Actividad 3: Definiendo el Núcleo del Prototipo IA (MVP) ⏰ Tiempo: 10 minutos</summary>
+            <div id="activity_3_content" class="content">
+                 <table>
+                     <thead><tr><th>Acción</th><th>Diálogo del Maestro</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>Paso 1: (2 min)</strong> Explicar el concepto de MVP (Minimum Viable Prototype) en este contexto. <strong>(Proyectar Diapositiva 4: ¿Qué es el MVP? - Imagen simple + Definición Clave)</strong>.
+                            </td>
+                            <td>
+                                "Ahora que tenemos la estructura, necesitamos definir QUÉ vamos a construir primero con la IA. No podemos hacerlo todo de golpe. Necesitamos enfocarnos en lo esencial. A esto le llamamos el <strong>MVP</strong>: el <strong>Prototipo Mínimo Viable</strong>."
+                                <br><br>
+                                "El MVP es la versión más básica pero funcional de su 'Visión del Futuro' que ya entrega valor o muestra la idea central. Es la pieza clave que SÍ o SÍ necesitamos generar con IA para representar su concepto."
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Paso 2: (6 min)</strong> Guiar a los equipos, con el Arquitecto/a de IA liderando la discusión, para definir su MVP. Plantear preguntas clave. <strong>(Proyectar Diapositiva 5: Definiendo Nuestro MVP - Preguntas Guía)</strong>.
+                            </td>
+                            <td>
+                                "Ahora, en sus equipos, y con el <strong>Arquitecto/a de IA</strong> facilitando la conversación, van a definir su MVP. Pregúntense:"
+                                <br>
+                                "- ¿Cuál es la pieza central, generada por IA, que <strong>debe</strong> tener nuestro prototipo rápido para que se entienda la idea?"
+                                <br>
+                                "- ¿Es un <strong>texto descriptivo</strong> clave que explique el escenario futuro?"
+                                <br>
+                                "- ¿Es una <strong>imagen conceptual</strong> principal creada con IA generativa?"
+                                <br>
+                                "- ¿Quizás una combinación de ambos?"
+                                <br><br>
+                                "Enfóquense en lo <strong>mínimo indispensable</strong> para esta primera versión. ¡Definan su MVP! Anótenlo claramente."
+                                <br><br>
+                                <em>(Circular y apoyar la discusión. Ayudar a los Arquitectos/as a guiar a sus equipos. Escuchar las propuestas de MVP).</em>
+                                "¿Equipo X, cuál creen que es su MVP? ¿Por qué esa pieza es esencial?"
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Paso 3: (2 min)</strong> Confirmar que cada equipo ha definido su MVP.
+                            </td>
+                            <td>
+                                "¡Excelente! ¿Cada equipo tiene claro cuál es su MVP? ¿Esa pieza central que van a generar con la IA? ¡Perfecto! Este será nuestro objetivo principal para las próximas sesiones."
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+
+        <!-- Actividad 4: Backlog Inicial de Prompts -->
+        <details id="activity_4_details" class="activity" open>
+            <summary class="banner" onclick="toggleContent('activity_4')">📝 Actividad 4: Backlog Inicial de Prompts ⏰ Tiempo: 10 minutos</summary>
+            <div id="activity_4_content" class="content">
+                 <table>
+                     <thead><tr><th>Acción</th><th>Diálogo del Maestro</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>Paso 1: (2 min)</strong> Explicar cómo descomponer el MVP en tareas/prompts iniciales para el Kanban. <strong>(Proyectar Diapositiva 6: Del MVP al Backlog - Ejemplo Visual)</strong>.
+                            </td>
+                            <td>
+                                "Ahora que sabemos QUÉ queremos lograr (nuestro MVP), necesitamos definir CÓMO le pediremos ayuda a la IA. Vamos a descomponer ese MVP en tareas técnicas más pequeñas, que serán nuestros primeros <strong>prompts</strong>."
+                                <br><br>
+                                "Estas tareas formarán nuestro <strong>Backlog Inicial</strong>, la lista de cosas 'Por Hacer'."
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Paso 2: (6 min)</strong> Guiar la creación del backlog. El Arquitecto/a facilita, el Ingeniero/a ayuda a detallar posibles prompts, y el Evaluador/a piensa en criterios de calidad. Poner ejemplos.
+                            </td>
+                            <td>
+                                "En sus equipos: El <strong>Arquitecto/a</strong> lidera la descomposición del MVP en tareas. El <strong>Ingeniero/a</strong> piensa en cómo podría ser el prompt para cada tarea. El <strong>Evaluador/a</strong> empieza a pensar qué haría que el resultado de ese prompt sea 'bueno'."
+                                <br><br>
+                                "Por ejemplo, si su MVP es 'Generar párrafo descriptivo clave del escenario futuro', algunas tareas podrían ser:"
+                                <ul>
+                                    <li>"Investigar herramienta IA de texto adecuada (si no la conocen)." <em>(Tarea de preparación)</em></li>
+                                    <li>"Diseñar Prompt v1 para descripción del escenario." <em>(Tarea principal)</em></li>
+                                    <li>"Evaluar coherencia de la salida v1 con la visión." <em>(Tarea de evaluación implícita)</em></li>
+                                    <li>"Refinar prompt a v1.1 si es necesario." <em>(Tarea de iteración)</em></li>
+                                </ul>
+                                "Si su MVP incluye una imagen, las tareas podrían ser: 'Seleccionar IA generadora de imágenes', 'Diseñar prompt v1 para imagen conceptual', 'Evaluar salida v1', 'Refinar prompt v1.1'."
+                                <br><br>
+                                "Escriban cada tarea en un post-it (físico o digital) y colóquenlo en la columna <strong>'Por Hacer'</strong> de su Kanban. Sean lo más específicos posible en esta etapa inicial."
+                                <br><br>
+                                <em>(Circular activamente, facilitando la interacción entre roles. Asegurar que las tareas sean accionables y estén relacionadas con el MVP).</em>
+                                "Arquitecto/a, ¿cómo estás descomponiendo el MVP? Ingeniero/a, ¿qué ideas de prompt tienes para esa tarea? Evaluador/a, ¿qué buscarías en la respuesta de la IA?"
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Paso 3: (2 min)</strong> Verificar que los equipos tengan su backlog inicial en la columna "Por Hacer".
+                            </td>
+                            <td>
+                                "Revisen su columna 'Por Hacer'. ¿Tienen las tareas iniciales que los llevarán a crear su MVP? ¿Están claras? ¡Este es su plan de ataque inicial!"
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+
+        <!-- Actividad 5: ¡Asignación y Arranque IA! -->
+        <details id="activity_5_details" class="activity" open>
+            <summary class="banner" onclick="toggleContent('activity_5')">⚡ Actividad 5: ¡Asignación y Arranque IA! ⏰ Tiempo: 5 minutos</summary>
+            <div id="activity_5_content" class="content">
+                 <table>
+                     <thead><tr><th>Acción</th><th>Diálogo del Maestro</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>Paso 1: (2 min)</strong> Pedir a los equipos que asignen formalmente los roles (Arquitecto/a, Ingeniero/a, Evaluador/a) entre sus miembros para empezar.
+                            </td>
+                            <td>
+                                "¡Es hora de activar esos roles! En sus equipos, decidan quién será el <strong>Arquitecto/a de IA</strong>, quién el <strong>Ingeniero/a de Prompts</strong> y quién el <strong>Evaluador/a de Calidad IA</strong> para esta primera fase del proyecto. Pueden rotar más adelante si lo desean."
+                                <br><br>
+                                "Asegúrense de que todos tengan un rol y sepan cuál es su responsabilidad principal para empezar. Tienen 1 minuto para decidir."
+                                <br><br>
+                                <em>(Esperar a que los equipos se organicen).</em>
+                                "¿Listos? ¿Todos tienen su rol?"
+                            </td>
+                        </tr>
+                         <tr>
+                            <td>
+                                <strong>Paso 2: (2 min)</strong> El Ingeniero/a de Prompts selecciona la primera tarea del backlog y la mueve a "En Ingeniería". Dar la señal de arranque. <strong>(Proyectar Diapositiva 7: ¡A Construir! - Imagen de cohete despegando o similar)</strong>.
+                            </td>
+                            <td>
+                                "¡Roles listos! Ahora, <strong>Ingeniero/a de Prompts</strong> de cada equipo: selecciona la primera tarea más importante de la columna 'Por Hacer' (probablemente algo como 'Diseñar Prompt v1 para X'). Mueve esa tarjeta/post-it a la columna <strong>'En Ingeniería'</strong>."
+                                <br><br>
+                                <em>(Verificar que todos los Ingenieros/as hayan movido una tarea).</em>
+                                <br><br>
+                                "¡Perfecto! Ingeniero/a, tu primera misión es diseñar ese prompt maestro inicial. Arquitecto/a y Evaluador/a, prepárense para apoyar y revisar."
+                                <br><br>
+                                "¡Que la ingeniería de prompts comience! En la próxima sesión, nos pondremos manos a la obra con la ejecución."
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Paso 3: (1 min)</strong> Cierre corto de la sesión, anticipando la siguiente.
+                            </td>
+                            <td>
+                                "¡Gran trabajo hoy, equipo! Han definido su objetivo (MVP), organizado su flujo de trabajo (Kanban), asignado roles y preparado su plan de ataque inicial (Backlog). ¡Han sentado las bases para crear su prototipo IA!"
+                                <br><br>
+                                "En la Sesión 2, el Ingeniero/a de Prompts empezará a interactuar con la IA para generar la primera versión del output. ¡Prepárense para la acción! Nos vemos."
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+
+    </div> <!-- Fin del container -->
+</body>
+</html>
